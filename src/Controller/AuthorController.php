@@ -52,8 +52,8 @@ class AuthorController extends AbstractController
     /**
      * @Route("/author/task/insert", name="author_insert")
      */
-/*
-    public function insertAuthor (EntityManagerInterface $entityManager)
+
+    public function insertAuthor(EntityManagerInterface $entityManager)
     {
 
         // Pour créer un enregistrement de Book en bdd, j'utilise une instance de l'entité Book
@@ -64,8 +64,8 @@ class AuthorController extends AbstractController
         // colonne en BDD)
         $author->setName('PAYTON');
         $author->setFirstName('Gary');
-        $author->setBirthDate(new \DateTime);
-        $author->setDeathDate(new \DateTime);
+        $author->setBirthDate(new \DateTime('1909-08-29'));
+        $author->setDeathDate(new \DateTime('2000-01-01'));
         $author->setBiography('Né en Russie du Sud');
 
         // j'utilise l'EntityManager avec la méthode persist pour sauvegarder mon entité (similaire à un commit
@@ -78,7 +78,7 @@ class AuthorController extends AbstractController
         return new Response('auteur enregistré');
 
     }
-PAS REUSSI*/
+
 
     /**
      * @Route("/author/delete/{id}", name="author_delete")
