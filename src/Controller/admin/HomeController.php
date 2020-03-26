@@ -4,7 +4,7 @@
 // (en gardant en tête que "App" = "src")
 // et qui permet à Symfony d'"autoloader" ma classe
 // sans que j'ai besoin de faire d'import ou de require à la main
-namespace App\Controller;
+namespace App\Controller\admin;
 
 // je fais un "use" vers le namespace (qui correspond au chemin) de la classe "Route"
 // ça correspond à un import ou un require en PHP
@@ -21,31 +21,31 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/accueil", name="accueil")
+     * @Route("admin/accueil", name="admin_accueil")
      */
     public function accueil(BookRepository $bookRepository)
     {
         $books = $bookRepository->findAll();
 
-        return $this->render('index.html.twig', [
+        return $this->render('admin/index.html.twig', [
             'books' => $books
         ]);
 
     }
     /**
-     * @Route("/book/{id}", name="book")
+     * @Route("admin/book/{id}", name="admin_book")
      */
     public function book(BookRepository $bookRepository, $id)
     {
         $book = $bookRepository->find($id);
 
-        return $this->render('book.html.twig', [
+        return $this->render('admin/book.html.twig', [
             'book' => $book
         ]);
 
     }
     /**
-     * @Route("/book/task/insert", name="book_insert")
+     * @Route("admin/book/task/insert", name="admin_book_insert")
      */
 
     public function insertBook(EntityManagerInterface $entityManager)
@@ -73,7 +73,7 @@ class HomeController extends AbstractController
 
     }
     /**
-     * @Route("/book/delete/{id}", name="book_delete")
+     * @Route("admin/book/delete/{id}", name="admin_book_delete")
      */
     public function deleteBook(
         BookRepository $bookRepository,
@@ -97,7 +97,7 @@ class HomeController extends AbstractController
 
     }
     /**
-     * @route("book/update/{id}", name="book_update")
+     * @route("admin/book/update/{id}", name="admin_book_update")
      */
     public function updateBook(BookRepository $bookRepository, $id, EntityManagerInterface $entityManager)
     {
@@ -113,14 +113,14 @@ class HomeController extends AbstractController
         return new Response('le livre a bien été modifié');
     }
     /**
-     * @Route("/search", name="book_search")
+     * @Route("admin/search", name="admin_book_search")
      */
     Public function searchByResume(BookRepository $bookRepository, Request $request)
     {
         $word = $request->query->get('word');
         $books = $bookRepository->getByWordInResume($word);
 
-        return $this->render('search.html.twig',[
+        return $this->render('admin/search.html.twig',[
             'books' => $books,
             'word' => $word
         ]);

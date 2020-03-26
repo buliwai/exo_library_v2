@@ -12,12 +12,12 @@
         <img src="/img/logo.png"   />
         <div>
             <ul >
-                <li><a href="{{ path('accueil') }}">ACCUEIL</a></li>
+                <li><a href="{{ path('admin_accueil') }}">ACCUEIL</a></li>
                 <li>LIVRES</li>
                 <li>DIVERS</li>
             </ul>
             <div>
-                <form action="{{ path('author_search') }}" method="get">
+                <form action="{{ path('admin_author_search') }}" method="get">
                     <label for="word"></label>
                     <input type="text" name="word" placeholder="Rechercher sur le site…">
                     <button>Rechercher</button>
@@ -43,7 +43,7 @@
 
             {% endfor %}
     </div>
-    <a href="{{ path('accueil') }}">RETOUR A LA PAGE D'ACCUEIL</a>
+    <a href="{{ path('admin/accueil') }}">RETOUR A LA PAGE D'ACCUEIL</a>
 
 
 </main>

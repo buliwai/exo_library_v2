@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-
-    <title>Title</title>
-
+    <title>Accueil</title>
 
     <link rel="stylesheet"  href="{{ asset('css/exo_style.css') }}"  />
 <body>
@@ -14,40 +11,32 @@
             <img src="/img/logo.png"   />
             <div>
                 <ul >
-                    <li><a href="{{ path('accueil') }}">ACCUEIL</a></li>
+                    <li><a href="{{ path('admin_accueil') }}">ACCUEIL</a></li>
                     <li>LIVRES</li>
                     <li>DIVERS</li>
                 </ul>
-
             <div>
-                <form action="{{ path('book_search') }}" method="get">
+                <form action="{{ path('admin_author_search') }} " method="get">
                     <label for="word"></label>
                     <input type="text" name="word" placeholder="Rechercher sur le site…">
                     <button>Rechercher</button>
 
                 </form>
-
             </div>
-
+        </div>
         </div>
     </header>
 <main>
 
 
-
-
     <div id="livre">
-        {% for key, book in books %}
+        {% for key, author in authors %}
         <div id="contenu">
             <img src="/img/200.webp"  />
-
-            <p class="titre"><a href="{{ path('book', { 'id': book.id }) }}">{{ book.title }}</a> </p>
-
-
-
-                <p>Auteur : {{ book.author }}</p>
-                <p>Résumé : {{ book.resume }}</p>
-
+            <p class="titre"><a href="{{ path('admin_author', { 'id': author.id }) }}">{{ author.name }} {{ author.firstName }}</a> </p>
+                <p>Date de naissance : {{ author.birthDate|date('Y-m-d') }}</p>
+                <p>Date de décès : {{ author.deathDate|date('Y-m-d') }}</p>
+                <p>Biographie : {{ author.biography }}</p>
 
             {% endfor %}
 

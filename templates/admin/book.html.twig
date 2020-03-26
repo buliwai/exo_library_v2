@@ -12,13 +12,13 @@
         <img src="/img/logo.png"   />
         <div>
             <ul >
-                <li><a href="{{ path('accueil') }}">ACCUEIL</a></li>
+                <li><a href="{{ path('admin_accueil') }}">ACCUEIL</a></li>
                 <li>LIVRES</li>
                 <li>DIVERS</li>
             </ul>
 
             <div>
-                <form action="{{ path('book_search') }}" method="get">
+                <form action="{{ path('admin_book_search') }}" method="get">
                     <label for="word"></label>
                     <input type="text" name="word" placeholder="Rechercher sur le site…">
                     <button>Rechercher</button>
@@ -40,8 +40,8 @@
     <p>Titre du Livre : {{ book.title }}</p>
         <p>Auteur : {{ book.author }}</p>
         <p>Résumé : {{ book.resume }}</p>
-    <p><a href="{{ path('book_delete', {'id':book.id})  }}">Supprimer le livre</a></p>
-    <a href="{{ path ('book_update', {'id': book.id }) }}">modifier titre livre</a>
+    <p><a href="{{ path('admin_book_delete', {'id':book.id})  }}">Supprimer le livre</a></p>
+    <a href="{{ path ('admin_book_update', {'id': book.id }) }}">modifier titre livre</a>
 
 
 
