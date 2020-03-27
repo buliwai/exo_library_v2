@@ -29,7 +29,7 @@ class AuthorController extends AbstractController
     {
         $authors = $authorRepository->findAll();
 
-        return $this->render('index.authors.html.twig', [
+        return $this->render('admin/author/index.authors.html.twig', [
             'authors' => $authors
         ]);
 
@@ -44,7 +44,7 @@ class AuthorController extends AbstractController
         // qui me permet de sélectionner les livres en bdd
         $author = $authorRepository->find($id);
 
-        return $this->render('admin/author.html.twig', [
+        return $this->render('admin/author/author.html.twig', [
             'author' => $author
         ]);
 
@@ -130,7 +130,7 @@ class AuthorController extends AbstractController
 
         $authors = $authorRepository->getByWordInBiography($word);
 
-        return $this->render('admin/search.author.html.twig', [
+        return $this->render('admin/author/search.author.html.twig', [
             'authors' => $authors,
             'word' => $word
 

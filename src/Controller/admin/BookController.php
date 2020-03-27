@@ -11,6 +11,7 @@ namespace App\Controller\admin;
 // pour pouvoir utiliser cette classe dans mon code
 use App\Entity\Book;
 use App\Repository\BookRepository;
+use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 // je créé ma classe HomeController et je la nomme de la même manière que mon fichier
-class HomeController extends AbstractController
+class BookController extends AbstractController
 {
     /**
      * @Route("admin/accueil", name="admin_accueil")
@@ -27,7 +28,7 @@ class HomeController extends AbstractController
     {
         $books = $bookRepository->findAll();
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/book/index.html.twig', [
             'books' => $books
         ]);
 
@@ -39,28 +40,41 @@ class HomeController extends AbstractController
     {
         $book = $bookRepository->find($id);
 
-        return $this->render('admin/book.html.twig', [
+        return $this->render('admin/book/book.html.twig', [
             'book' => $book
         ]);
 
     }
+
     /**
      * @Route("admin/book/task/insert", name="admin_book_insert")
      */
 
-    public function insertBook(EntityManagerInterface $entityManager)
+    public function insertBook(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        AuthorRepository $authorRepository
+    )
     {
 
         // Pour créer un enregistrement de Book en bdd, j'utilise une instance de l'entité Book
         // Doctrine va faire le lien et transformer mon entité en nouvel enregistrement
         $book = new Book();
 
+        $title = $request->query->get('title');
+
         // j'utilise les setters de mon entité pour donner les valeurs à chaque propriétés (donc à chaque
         // colonne en BDD)
-        $book->setTitle('UN ETE AU JAPON');
-        $book->setAuthor('Jeremy LIN');
-        $book->setResume('Livre retracant la vie de...');
-        $book->setNbPages(180);
+        $book->setTitle($title);
+
+        // je récupère un auteur en BDD grâce à l'authorRepository
+        $author = $authorRepository->find(8);
+
+        // Je viens relier l'auteur récupéré au livre que je suis en train de créer
+        $book->setAuthor($author);
+
+        $book->setNbPages(200);
+        $book->setResume('Un groupe de ....');
 
         // j'utilise l'EntityManager avec la méthode persist pour sauvegarder mon entité (similaire à un commit
         // Attention ça n'enregistre pas encore en BDD
@@ -69,9 +83,12 @@ class HomeController extends AbstractController
         // j'utilise la méthode flush pour enregistrer en bdd (execute la requête SQL)
         $entityManager->flush();
 
-        return new Response('livre enregistré');
+        return $this->render('admin/book/insert.html.twig', [
+            'book' => $book
+        ]);
 
     }
+
     /**
      * @Route("admin/book/delete/{id}", name="admin_book_delete")
      */
@@ -120,7 +137,7 @@ class HomeController extends AbstractController
         $word = $request->query->get('word');
         $books = $bookRepository->getByWordInResume($word);
 
-        return $this->render('admin/search.html.twig',[
+        return $this->render('admin/book/search.html.twig',[
             'books' => $books,
             'word' => $word
         ]);

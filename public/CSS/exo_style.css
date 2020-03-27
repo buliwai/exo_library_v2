@@ -2,34 +2,40 @@ body{
     margin: 0;
 }
 
-<<<<<<< HEAD
-=======
+
 #main{
     background-color: #999999;
 }
-
->>>>>>> 9d52917f11caa72cf14c6c2e5d5cb56c548ef23d
+.home{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: auto;
+}
+.titre_home{
+    text-align: center;
+    background-color: #999999;
+}
 #menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
-<<<<<<< HEAD
+
     flex-wrap: wrap;
     flex-direction: row;
-=======
->>>>>>> 9d52917f11caa72cf14c6c2e5d5cb56c548ef23d
+
 }
 div ul{
     display: flex;
     justify-content: space-between;
     align-items: center;
     list-style: none;
-<<<<<<< HEAD
+
     flex-wrap: wrap;
     flex-direction: row;
-=======
 
->>>>>>> 9d52917f11caa72cf14c6c2e5d5cb56c548ef23d
 }
 #menu li{
     margin: 40px;
@@ -37,29 +43,51 @@ div ul{
 
 }
 
+main{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    flex-wrap: wrap;
+    background-color: #c5c9df;
+}
 #livre {
     display: flex;
-    justify-content: space-evenly;
+    padding: 20px;
+    width: calc(100% - 40px);
     align-items: center;
-    flex-direction: row;
-<<<<<<< HEAD
-    flex-wrap: wrap;
-=======
->>>>>>> 9d52917f11caa72cf14c6c2e5d5cb56c548ef23d
+
 }
-#contenu {
+#contenu{
+    padding: 20px;
+    width: calc(100% - 40px);
+
+    align-items: center;
+
+
+}
+section{
     display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    border: thick double #32a1ce;
     justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-text-align: justify;
-    flex-wrap: wrap;
-    margin: 30px;
+    margin: 20px 20px 20px;
+    animation: pulse 1s linear 0s infinite normal;
+
+}
+section:hover{
+
+    animation: jello 1s linear 0s ;
+
 }
 .titre{
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
+    margin: 20px 10px 10px;
+
 }
 img{
     cursor: pointer;
@@ -69,20 +97,64 @@ img{
 
 #page_livre{
     text-align: center;
+    display: flex;
+    flex-direction:column;
+
 }
 p{
     font-weight: bolder;
-<<<<<<< HEAD
+
 }
 header, footer{
     background-color: #dfdfdf;
 }
-main{
-    background-color: #c5c9df;
-}
+
 
 .search_result{
     text-align: center;
-=======
->>>>>>> 9d52917f11caa72cf14c6c2e5d5cb56c548ef23d
+
+}
+
+@keyframes jello {
+    from,
+    11.1%,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    22.2% {
+        -webkit-transform: skewX(-12.5deg) skewY(-12.5deg);
+        transform: skewX(-12.5deg) skewY(-12.5deg);
+    }
+
+    33.3% {
+        -webkit-transform: skewX(6.25deg) skewY(6.25deg);
+        transform: skewX(6.25deg) skewY(6.25deg);
+    }
+
+    44.4% {
+        -webkit-transform: skewX(-3.125deg) skewY(-3.125deg);
+        transform: skewX(-3.125deg) skewY(-3.125deg);
+    }
+
+    55.5% {
+        -webkit-transform: skewX(1.5625deg) skewY(1.5625deg);
+        transform: skewX(1.5625deg) skewY(1.5625deg);
+    }
+
+    66.6% {
+        -webkit-transform: skewX(-0.78125deg) skewY(-0.78125deg);
+        transform: skewX(-0.78125deg) skewY(-0.78125deg);
+    }
+
+    77.7% {
+        -webkit-transform: skewX(0.390625deg) skewY(0.390625deg);
+        transform: skewX(0.390625deg) skewY(0.390625deg);
+    }
+
+    88.8% {
+        -webkit-transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+        transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+    }
 }

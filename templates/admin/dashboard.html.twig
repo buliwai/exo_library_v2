@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"  href="{{ asset('css/exo_style.css') }}"  />
+</head>
+<body>
+<header >
+    <div id="menu">
+        <img src="/img/logo.png"   />
+        <div>
+            <ul >
+                <li><a href="{{ path('admin_accueil') }}">ACCUEIL</a></li>
+                <li>LIVRES</li>
+                <li>DIVERS</li>
+            </ul>
+            <div>
+                <form action="{{ path('admin_book_search') }} " method="get">
+                    <label for="word"></label>
+                    <input type="text" name="word" placeholder="Rechercher sur le site…">
+                    <button>Rechercher</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+    <main>
+        <h2>Bienvenue sur l'admin ! Vous pouvez ici gérer vos auteurs et vos livres.</h2>
+
+        <a href="{{ path('admin_accueil') }}">Voir les livres</a>
+        <a href="{{ path('admin_authors') }}">Voir les auteurs</a>
+    </main>
+
+<footer>
+    <div id="menu">
+        <img src="/img/logo.png"   />
+        <div>
+            <ul >
+                <li>Lien 1</li>
+                <li>Lien 2</li>
+                <li>Lien 3</li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+</body>
+</html>
+
