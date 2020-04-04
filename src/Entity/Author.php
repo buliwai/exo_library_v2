@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
@@ -18,6 +19,9 @@ class Author
 
     /**
      * @ORM\Column(type="string", length=255)
+     //ceci est une contrainte qui permet de securiser si on enleve le required cela met un message de base en anglais
+     //ce message peut etre modifie en mettant (ùessage="blabla")
+     * @Assert\NotBlank(message="Merci de remplir le nom de l'auteur")
      */
     private $name;
 

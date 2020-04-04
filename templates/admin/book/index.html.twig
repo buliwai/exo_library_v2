@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
     <meta charset="UTF-8">
 
 
@@ -33,13 +33,18 @@
     </header>
 <main>
 
-<section>
+
     {% for key, book in books %}
 
-    <div id="livre">
+    <div class="container_livre">
 
-        <div id="contenu">
-            <img src="/img/200.webp"  />
+        <div class="livre">
+
+            {% if book.bookCover %}
+                <p> <img src="{{ asset('img/bookCover/' ~ book.bookCover) }}"  /></p>
+            {% else %}
+                <i>Il n'y a pas d'image pour ce livre !</i>
+            {% endif %}
 
             <p class="titre"><a href="{{ path('admin_book', { 'id': book.id }) }}">{{ book.title }}</a> </p>
 
@@ -50,7 +55,7 @@
 
     </div>
     {% endfor %}
-</section>
+
 </main>
     <footer>
         <div id="menu">

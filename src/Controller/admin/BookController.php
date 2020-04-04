@@ -10,13 +10,16 @@ namespace App\Controller\admin;
 // ça correspond à un import ou un require en PHP
 // pour pouvoir utiliser cette classe dans mon code
 use App\Entity\Book;
+use App\Form\BookType;
 use App\Repository\BookRepository;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 // je créé ma classe HomeController et je la nomme de la même manière que mon fichier
 class BookController extends AbstractController
@@ -49,8 +52,69 @@ class BookController extends AbstractController
     /**
      * @Route("admin/book/task/insert", name="admin_book_insert")
      */
+    public function insertBook(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
+    {
 
-    public function insertBook(
+        // 1 : En ligne de commandes, tapez : php bin/console make:form afin de
+        // créer le BookType (le template du formulaire)
+        // 2 : dans le contrôleur, générer le formulaire avec $this->createView
+        // 3 : afficher dans Twig le formulaire avec la fonction form ({{ form(formBook) }})
+        // J'ai généré avec symfony un template de formulaire (BookType)
+        // qui contient déjà tous les inputs à créer en HTML
+        // Je vais pouvoir utiliser ce gabarit de formulaire pour générer mon
+        // formulaire HTML (donc tous mes champs inputs etc)
+
+        // Je créé un nouveau livre, pour le lier à mon formulaire
+        $book = new Book();
+
+        // je créé mon formulaire, et je le lie à mon nouveau livre
+        $formBook = $this->createForm(BookType::class, $book);
+
+        // je demande à mon formulaire $formBook de gérer les données
+        // de la requête POST
+        $formBook->handleRequest($request);
+
+        // si le formulaire a été envoyé, et que les données sont valides
+        if ($formBook->isSubmitted() && $formBook->isValid()) {
+            //INSERTION IMAGE
+            $bookCover = $formBook->get('bookCover')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($bookCover) {
+                $originalFilename = pathinfo($bookCover->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$bookCover->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $bookCover->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+                $book->setBookCover($newFilename);
+
+                }
+            //INSERTION IMAGE
+            // je persiste le book
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            // j'ajoute un message "flash"
+            $this->addFlash('success', 'Votre livre a bien été créé !');
+        }
+
+        return $this->render('admin/book/insert.book.html.twig', [
+            'formBook' => $formBook->createView()
+        ]);
+
+    }
+
+    /* VERSION 1 EN DUR
+      public function insertBook(
         EntityManagerInterface $entityManager,
         Request $request,
         AuthorRepository $authorRepository
@@ -83,11 +147,9 @@ class BookController extends AbstractController
         // j'utilise la méthode flush pour enregistrer en bdd (execute la requête SQL)
         $entityManager->flush();
 
-        return $this->render('admin/book/insert.html.twig', [
-            'book' => $book
-        ]);
+        return new Response('le livre a bien été ajouté');
 
-    }
+    }*/
 
     /**
      * @Route("admin/book/delete/{id}", name="admin_book_delete")
@@ -116,6 +178,26 @@ class BookController extends AbstractController
     /**
      * @route("admin/book/update/{id}", name="admin_book_update")
      */
+    public function updateBook(BookRepository $bookRepository, $id, Request $request, EntityManagerInterface $entityManager)
+    {
+        //recuperer un livre en bdd
+        $book = $bookRepository->find($id);
+        //je crée un formulaire qui est relié a mon nouveau livre
+        $formBook = $this->createForm(BookType::class, $book);
+
+        $formBook->handleRequest($request);
+        //je demande a mon formulaire $formBook de gerer les données
+        //de ma requete post
+        if($formBook->isSubmitted() && $formBook->isValid()){
+            //je persist le book
+            $entityManager->persist($book);
+            $entityManager->flush();
+        }
+        return $this->render('admin/book/modify.book.html.twig', [
+            'formBook' => $formBook->createView()
+        ]);
+    }
+    /*VERSION 1
     public function updateBook(BookRepository $bookRepository, $id, EntityManagerInterface $entityManager)
     {
         //recuperer un livre en bdd
@@ -129,6 +211,7 @@ class BookController extends AbstractController
 
         return new Response('le livre a bien été modifié');
     }
+    */
     /**
      * @Route("admin/search", name="admin_book_search")
      */

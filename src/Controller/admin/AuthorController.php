@@ -10,6 +10,7 @@ namespace App\Controller\admin;
 // ça correspond à un import ou un require en PHP
 // pour pouvoir utiliser cette classe dans mon code
 use App\Entity\Book;
+use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,6 +54,43 @@ class AuthorController extends AbstractController
      * @Route("admin/author/task/insert", name="admin_author_insert")
      */
 
+    public function insertAuthor(Request $request, EntityManagerInterface $entityManager)
+    {
+
+        // 1 : En ligne de commandes, tapez : php bin/console make:form afin de
+        // créer le BookType (le template du formulaire)
+        // 2 : dans le contrôleur, générer le formulaire avec $this->createView
+        // 3 : afficher dans Twig le formulaire avec la fonction form ({{ form(formBook) }})
+        // J'ai généré avec symfony un template de formulaire (BookType)
+        // qui contient déjà tous les inputs à créer en HTML
+        // Je vais pouvoir utiliser ce gabarit de formulaire pour générer mon
+        // formulaire HTML (donc tous mes champs inputs etc)
+
+        // Je créé un nouveau livre, pour le lier à mon formulaire
+        $author = new \App\Entity\Author();
+
+        // je créé mon formulaire, et je le lie à mon nouveau livre
+        $formAuthor = $this->createForm(AuthorType::class, $author);
+
+        // je demande à mon formulaire $formBook de gérer les données
+        // de la requête POST
+        $formAuthor->handleRequest($request);
+
+        // si le formulaire a été envoyé, et que les données sont valides
+        if ($formAuthor->isSubmitted() && $formAuthor->isValid()) {
+            // je persiste le book
+            $entityManager->persist($author);
+            $entityManager->flush();
+
+        // j'ajoute un message "flash"
+        $this->addFlash('success', 'Votre auteur a bien été créé !');
+        }
+        return $this->render('admin/author/insert.author.html.twig', [
+            'formAuthor' => $formAuthor->createView()
+        ]);
+
+    }
+    /*VERSION1
     public function insertAuthor(EntityManagerInterface $entityManager)
     {
 
@@ -78,7 +116,7 @@ class AuthorController extends AbstractController
         return new Response('auteur enregistré');
 
     }
-
+*/
 
     /**
      * @Route("admin/author/delete/{id}", name="admin_author_delete")
@@ -107,6 +145,24 @@ class AuthorController extends AbstractController
     /**
      * @route("admin/author/update/{id}", name="admin_author_update")
      */
+    public function updateAuthor(AuthorRepository $authorRepository, $id, EntityManagerInterface $entityManager, Request $request)
+    {
+        //recuperer un l'auteur en bdd
+        $author = $authorRepository->find($id);
+        $formAuthor = $this->createForm(AuthorType::class,$author);
+        $formAuthor->handleRequest($request);
+        //on reenregistre l'auteur
+        if($formAuthor->isSubmitted() && $formAuthor->isValid()){
+            //je persist et flush
+            //un peu comme commit et push
+            $entityManager->persist($author);
+            $entityManager->flush();
+        }
+
+        return $this->render('admin/author/modify.author.html.twig',[
+            'formAuthor' =>$formAuthor->createView()]);
+    }
+    /*VERSION1
     public function updateAuthor(AuthorRepository $authorRepository, $id, EntityManagerInterface $entityManager)
     {
         //recuperer un livre en bdd
@@ -120,7 +176,7 @@ class AuthorController extends AbstractController
 
         return new Response('l/auteur a bien été modifié');
     }
-
+*/
     /**
      * @Route("admin/search", name="admin_author_search")
      */

@@ -24,7 +24,7 @@ class PageAccueilController extends AbstractController
 
         //METHODE 2
         $lastBooks = $bookRepository->findBy([], ['id' => 'ASC'], 2, 0);
-        $lastAuthors = $authorRepository->findBy([], ['id' => 'ASC'], 2, 0);
+        $lastAuthors = $authorRepository->findBy([], ['id' => 'DESC'], 2, 0);
         return $this->render( 'front/home.html.twig', [
             'books' => $lastBooks,
             'authors' => $lastAuthors

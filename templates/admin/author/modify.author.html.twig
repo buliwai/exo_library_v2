@@ -12,13 +12,12 @@
         <img src="/img/logo.png"   />
         <div>
             <ul >
-                <li><a href="{{ path('admin_accueil') }}">ACCUEIL</a></li>
+                <li><a href="{{ path('home') }}">ACCUEIL</a></li>
                 <li>LIVRES</li>
                 <li>DIVERS</li>
             </ul>
-
             <div>
-                <form action="{{ path('admin_book_search') }}" method="get">
+                <form action="{{ path('admin_book_search') }} " method="get">
                     <label for="word"></label>
                     <input type="text" name="word" placeholder="Rechercher sur le site…">
                     <button>Rechercher</button>
@@ -26,33 +25,14 @@
                 </form>
             </div>
         </div>
-
-        </div>
-
     </div>
-
 </header>
 
-<main >
-
-    <div class="container_livre">
-
-        <div class="livre">
-            {% if book.bookCover %}
-    <p> <img src="{{ asset('img/bookCover/' ~ book.bookCover) }}"  /></p>
-            {% else %}
-                <i>Il n'y a pas d'image pour ce livre !</i>
-            {% endif %}
-    <p>Titre du Livre : {{ book.title }}</p>
-        <p>Auteur : {{ book.author.name }} {{ book.author.firstname }}</p>
-        <p>Résumé : {{ book.resume }}</p>
-    <p><a href="{{ path('admin_book_delete', {'id':book.id})  }}">Supprimer le livre</a></p>
-    <a href="{{ path ('admin_book_update', {'id': book.id }) }}">modifier titre livre</a>
-        </div>
-    </div>
+<main>
 
 
 
+<div>{{ form(formAuthor) }}</div>
 
 
 </main>

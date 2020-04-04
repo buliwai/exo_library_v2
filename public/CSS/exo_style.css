@@ -46,42 +46,17 @@ div ul{
 main{
     display: flex;
     justify-content: center;
-    text-align: center;
 
     flex-wrap: wrap;
     background-color: #c5c9df;
 }
-#livre {
-    display: flex;
-    padding: 20px;
-    width: calc(100% - 40px);
-    align-items: center;
-
-}
-#contenu{
-    padding: 20px;
-    width: calc(100% - 40px);
-
-    align-items: center;
 
 
-}
-section{
-    display: flex;
-    flex-direction:column;
-    flex-wrap: wrap;
-    border: thick double #32a1ce;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 20px 20px;
-    animation: pulse 1s linear 0s infinite normal;
-
-}
-section:hover{
+/*section:hover{
 
     animation: jello 1s linear 0s ;
 
-}
+}*/
 .titre{
     font-weight: bold;
     font-size: 20px;
@@ -95,16 +70,75 @@ img{
     height: 200px;
 }
 
-#page_livre{
-    text-align: center;
-    display: flex;
-    flex-direction:column;
 
-}
 p{
+
     font-weight: bolder;
 
 }
+.formulaire{
+    background-color: darkcyan;
+    padding: 20px;
+    align-items: center;
+}
+
+.form{
+    display: inline-flex;
+    flex-direction: column;
+    color: #222222;
+
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    padding: 20px;
+}
+.message_flash{
+    background-color: lime;
+    font-family: "Arial Black";
+    padding: 20px;
+}
+.container_login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+}
+.login{
+    border: thick double #32a1ce;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+.login h1{
+    padding: 30px;
+}
+.login_button{
+    align-items: center;
+    padding: 80px;
+}
+.container_livre{
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+
+    margin: 20px 20px 20px;
+
+}
+.livre{
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    border: thick double #32a1ce;
+    flex-wrap: wrap;
+    padding: 30px;
+}
+
 header, footer{
     background-color: #dfdfdf;
 }

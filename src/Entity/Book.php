@@ -46,18 +46,35 @@ class Book
     private $nbPages;
 /*ceci permet de creer foreign key. manytoone veut dire que plusieurs livres peuvent avoir un auteur*/
 /*il faut également supprimer get author et set author et author string car en doublon*/
+    /*inversedBy sert également a faire la liaison entre author et book*/
 
     /**
      * @ORM\ManyToOne(targetEntity="Author", inversedBy="books")
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $bookCover;
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getBookCover()
+    {
+        return $this->bookCover;
+    }
 
+    public function setBookCover($bookCover)
+    {
+        $this->bookCover = $bookCover;
+
+        return $this;
+    }
 
     public function getTitle(): ?string
     {
@@ -120,7 +137,6 @@ class Book
     {
         $this->author = $author;
     }
-
 
 
 

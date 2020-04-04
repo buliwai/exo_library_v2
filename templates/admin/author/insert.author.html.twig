@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"  href="{{ asset('css/exo_style.css') }}"  />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+<header >
+    <div id="menu">
+        <img src="/img/logo.png"   />
+        <div>
+            <ul >
+                <li><a href="{{ path('home') }}">ACCUEIL</a></li>
+                <li>LIVRES</li>
+                <li>DIVERS</li>
+            </ul>
+            <div>
+                <form action="{{ path('admin_book_search') }} " method="get">
+                    <label for="word"></label>
+                    <input type="text" name="word" placeholder="Rechercher sur le site…">
+                    <button>Rechercher</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    {#
+    <div class="formulaire" >
+
+        {{ form_start(formAuthor) }}
+            <div>
+                {{ form_label(formAuthor.name) }} :
+            </div>
+
+            <div>
+            {{ form_widget(formAuthor.name) }}
+            </div>
+
+            <div>
+                {{ form_label(formAuthor.firstName) }}
+            </div>
+
+            <div>
+                {{ form_widget(formAuthor.firstName) }}
+            </div>
+            <br>
+            {{ form_label(formAuthor.birthDate) }} : {{ form_widget(formAuthor.birthDate) }}
+            <br>
+            {{ form_row(formAuthor.deathDate) }}
+            <br>
+            {{ form_row(formAuthor.biography) }}
+            <br>
+
+    {{ form_end(formAuthor) }}
+
+        #}
+{#je met mon message flash#}
+    {% for message in app.flashes('success') %}
+        <div class="message_flash">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
+    {#methode bootstrap #}
+        <div class="form">
+            {{ form_start(formAuthor,{'attr': {'class': 'bg-light'}}) }}
+
+            {{ form_label(formAuthor.name) }}
+            {{ form_widget(formAuthor.name,{'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(formAuthor.name) }}
+
+            {{ form_label(formAuthor.firstName) }}
+            {{ form_widget(formAuthor.firstName,{'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(formAuthor.firstName) }}
+
+            {{ form_label(formAuthor.biography) }}
+            {{ form_widget(formAuthor.biography,{'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(formAuthor.biography) }}
+
+            {{ form_widget(formAuthor.submit,{'attr': {'class': 'btn btn-primary'}}) }}
+
+            {{ form_end(formAuthor) }}
+        </div>
+    {# j'affiche tous les messages flashs enregistrés #}
+
+
+
+
+
+
+
+
+
+</main>
+<footer>
+    <div id="menu">
+        <img src="/img/logo.png"   />
+        <div>
+            <ul >
+                <li>Lien 1</li>
+                <li>Lien 2</li>
+                <li>Lien 3</li>
+            </ul>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+
+</html>
+
